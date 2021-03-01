@@ -7,7 +7,7 @@ You should fork this project and provide a github link for your solution.
 You have to develop 
 
 Required: 
-- Configure application to use MongoDB (Community Edition)
+- Configure application to use Entity Framework Core
 - A grid with all customers with server side paging
 - CRUD Operations on “Customer” model with new, edit and delete functionalities
 - Expose all CRUD Operations as an API 
