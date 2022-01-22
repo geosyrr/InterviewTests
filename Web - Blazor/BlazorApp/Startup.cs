@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BlazorApp.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BlazorApp.Data;
+using Syncfusion.Blazor;
+
 
 namespace BlazorApp
 {
@@ -27,7 +29,12 @@ namespace BlazorApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.AddHttpClient<IFrontEndService, FrontEndService>(
+                client => client.BaseAddress = new Uri("http://localhost:5218"));
+            services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
+            services.AddScoped<CustomerAdaptor>();
+            services.AddScoped<FrontEndService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

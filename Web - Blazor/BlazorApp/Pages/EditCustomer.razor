@@ -1,0 +1,94 @@
+﻿@page "/EditCustomer/{CurrentId}"
+@using DataModels.Models;
+@using BlazorApp.Services;
+@using Syncfusion.Blazor;
+@using Syncfusion.Blazor.Grids;
+@inject FrontEndService _frontEndService;
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager;
+@inject IJSRuntime js;
+<h3>EditCustomer</h3>
+
+
+
+<EditForm Model="customer" OnValidSubmit="UpdateCustomer" OnInvalidSubmit="Cancel">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Company Name</label>
+        <ValidationMessage For="@(() => customer.CompanyName)" />
+        <InputText class="form-control" @bind-Value="customer.CompanyName" />
+    </div>
+    <div class="form-group">
+        <label>Contact Name</label>
+        <ValidationMessage For="@(() => customer.ContactName)" />
+        <InputText class="form-control" @bind-Value="customer.ContactName" />
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <ValidationMessage For="@(() => customer.Address)" />
+        <InputText class="form-control" @bind-Value="customer.Address" />
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <ValidationMessage For="@(() => customer.City)" />
+        <InputText class="form-control" @bind-Value="customer.City" />
+    </div>
+    <div class="form-group">
+        <label>Region</label>
+        <ValidationMessage For="@(() => customer.Region)" />
+        <InputText class="form-control" @bind-Value="customer.Region" />
+    </div>
+    <div class="form-group">
+        <label>PostalCode</label>
+        <ValidationMessage For="@(() => customer.PostalCode)" />
+        <InputText class="form-control" @bind-Value="customer.PostalCode" />
+    </div>
+    <div class="form-group">
+        <label>Country</label>
+        <ValidationMessage For="@(() => customer.Country)" />
+        <InputText class="form-control" @bind-Value="customer.Country" />
+    </div>
+    <div class="form-group">
+        <label>Phone</label>
+        <ValidationMessage For="@(() => customer.Phone)" />
+        <InputText class="form-control" @bind-Value="customer.Phone" />
+    </div>
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" @onclick="UpdateCustomer" value="Update">
+    </div>
+</EditForm>
+<h2 class="text-success p-2">@FormSubmitMessage</h2>
+
+@code {
+    [Parameter]
+    public string CurrentId { get; set; }
+    public string FormSubmitMessage { get; set; }
+    Customer customer = new Customer();
+
+    protected override async Task OnInitializedAsync()
+    {
+        customer = await _frontEndService.EditCustomer(CurrentId);
+
+    }
+    protected async Task UpdateCustomer()
+    {
+        var confirm = await js.InvokeAsync<bool>("editCustomer");
+        if (confirm)
+        {
+            var update = await js.InvokeAsync<bool>("updateCustomer");
+            if (update)
+            {
+                _frontEndService.UpdateCustomer(customer);
+                navigationManager.NavigateTo("/Customers");
+            }
+        }
+
+    }
+    void Cancel()
+    {
+        FormSubmitMessage = "Something went wrong";
+    }
+
+
+}

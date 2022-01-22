@@ -1,0 +1,83 @@
+﻿@page "/CreateNewCustomer"
+@using DataModels.Models
+@using Newtonsoft.Json
+@using System.Text
+@using BlazorApp.Services;
+@inject FrontEndService _frontEndService;
+@inject NavigationManager NavigationManager;
+@inject IJSRuntime js;
+
+<h1 class="bg-info text-white">Create Customer</h1>
+<h2 class="text-success p-2">@FormSubmitMessage</h2>
+<EditForm Model="customer" OnValidSubmit="CreateCustomer" OnInvalidSubmit="Cancel">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Company Name</label>
+        <ValidationMessage For="@(() => customer.CompanyName)" />
+        <InputText class="form-control" @bind-Value="customer.CompanyName" />
+    </div>
+    <div class="form-group">
+        <label>Contact Name</label>
+        <ValidationMessage For="@(() => customer.ContactName)" />
+        <InputText class="form-control" @bind-Value="customer.ContactName" />
+    </div>
+    <div class="form-group">
+        <label>Address</label>
+        <ValidationMessage For="@(() => customer.Address)" />
+        <InputText class="form-control" @bind-Value="customer.Address" />
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        <ValidationMessage For="@(() => customer.City)" />
+        <InputText class="form-control" @bind-Value="customer.City" />
+    </div>
+    <div class="form-group">
+        <label>Region</label>
+        <ValidationMessage For="@(() => customer.Region)" />
+        <InputText class="form-control" @bind-Value="customer.Region" />
+    </div>
+    <div class="form-group">
+        <label>PostalCode</label>
+        <ValidationMessage For="@(() => customer.PostalCode)" />
+        <InputText class="form-control" @bind-Value="customer.PostalCode" />
+    </div>
+    <div class="form-group">
+        <label>Country</label>
+        <ValidationMessage For="@(() => customer.Country)" />
+        <InputText class="form-control" @bind-Value="customer.Country" />
+    </div>
+    <div class="form-group">
+        <label>Phone</label>
+        <ValidationMessage For="@(() => customer.Phone)" />
+        <InputText class="form-control" @bind-Value="customer.Phone" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Create">
+    </div>
+</EditForm>
+
+
+
+
+@code {
+    Customer customer = new Customer();
+    public string FormSubmitMessage { get; set; }
+
+    protected async Task CreateCustomer()
+    {
+        var confirm = await js.InvokeAsync<bool>("createCustomer");
+        if (confirm)
+        {
+            _frontEndService.InsertCustomer(customer);
+            NavigationManager.NavigateTo("/Customers");
+        }
+    }
+    protected async Task Cancel() 
+    { 
+        var cancel = await js.InvokeAsync<bool>("invalidNewCustomer"); 
+    }
+
+    }
+

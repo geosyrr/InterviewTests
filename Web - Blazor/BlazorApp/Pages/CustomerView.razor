@@ -1,0 +1,66 @@
+﻿@page "/Customers"
+@using DataModels.Models;
+@using BlazorApp.Services;
+@using Syncfusion.Blazor;
+@using Syncfusion.Blazor.Grids;
+@inject FrontEndService _frontEndService;
+@inject Microsoft.AspNetCore.Components.NavigationManager navigationManager;
+@inject IJSRuntime js;
+
+<h3>Customers</h3>
+
+         <SfGrid @ref="customerGrid" TValue="Customer" AllowPaging="true" AllowSorting="true" Width="100%" >
+             <GridEvents CommandClicked="OnCommandClick" TValue="Customer"></GridEvents> 
+             @*<GridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true"></GridEditSettings>*@
+             <Syncfusion.Blazor.Data.SfDataManager Adaptor="Adaptors.CustomAdaptor" AdaptorInstance="@typeof(CustomerAdaptor)"></Syncfusion.Blazor.Data.SfDataManager>
+            <GridPageSettings PageSize="3" PageCount="5" PageSizes="@pagerDropdown"></GridPageSettings>
+           
+            <GridColumns>
+        <GridColumn Field=@nameof(Customer.CompanyName) HeaderText="Company Name"></GridColumn>
+        <GridColumn Field=@nameof(Customer.ContactName) HeaderText="Contact Name" Width="150"></GridColumn>
+        <GridColumn Field=@nameof(Customer.Address) HeaderText="Address"></GridColumn>
+        <GridColumn Field=@nameof(Customer.City) HeaderText="City"></GridColumn>
+        <GridColumn Field=@nameof(Customer.Region) HeaderText="Region"></GridColumn>
+        <GridColumn Field=@nameof(Customer.PostalCode) HeaderText="Postal Code"></GridColumn>
+        <GridColumn Field=@nameof(Customer.Country) HeaderText="Country"></GridColumn>
+        <GridColumn Field=@nameof(Customer.Phone) HeaderText="Phone"></GridColumn>
+        <GridColumn  HeaderText="Actions" Width="200"><GridCommandColumns>
+        <GridCommandColumn Type="CommandButtonType.Edit" ButtonOption="@(new CommandButtonOptions() 
+                {Content = "Edit", IconCss = "e-icons e-edit", CssClass = "e-flat" })"></GridCommandColumn>
+        <GridCommandColumn Type="CommandButtonType.Delete" ButtonOption="@(new CommandButtonOptions() 
+                {Content = "Delete", IconCss = "e-icons e-delete", CssClass = "e-flat" })"></GridCommandColumn>
+        <GridCommandColumn Type="CommandButtonType.Save"  ButtonOption="@(new CommandButtonOptions() 
+                {Content = "Save", IconCss = "e-icons e-save", CssClass = "e-flat" })"></GridCommandColumn>
+        <GridCommandColumn Type="CommandButtonType.Cancel" ButtonOption="@(new CommandButtonOptions() 
+                {Content = "Cancel", IconCss = "e-icons e-cancel", CssClass = "e-flat" })"></GridCommandColumn>
+    </GridCommandColumns></GridColumn>
+        </GridColumns>
+        
+ </SfGrid>
+       
+@code {
+    public SfGrid<Customer> customerGrid;
+    string[] pagerDropdown = new string[] { "All", "3", "5", "10", "15", "20" };
+
+    public async Task OnCommandClick(CommandClickEventArgs<Customer> args)
+    {
+
+        var customer = args.RowData;
+
+        if (args.CommandColumn.ButtonOption.Content == "Delete")
+        {
+            var confirm = await js.InvokeAsync<bool>("customDelete");
+            if (confirm)
+            {
+                _frontEndService.DeleteCustomer(customer.Id);
+                customerGrid.Refresh();
+            }
+            
+        }
+        if (args.CommandColumn.ButtonOption.Content == "Edit")
+        {
+            navigationManager.NavigateTo($"/EditCustomer/{customer.Id}");
+        }
+    }
+   
+}

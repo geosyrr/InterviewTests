@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29613.14
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModels", "DataModels\DataModels.csproj", "{07491993-8A17-49F1-ABB4-F1A80D1A050C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "Services\BusinessLogic.csproj", "{6F43F6FB-2747-4553-8E66-1E4ED35E546E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{DA1A099A-4F40-4C45-8B27-DA3179144483}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07491993-8A17-49F1-ABB4-F1A80D1A050C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07491993-8A17-49F1-ABB4-F1A80D1A050C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07491993-8A17-49F1-ABB4-F1A80D1A050C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07491993-8A17-49F1-ABB4-F1A80D1A050C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F43F6FB-2747-4553-8E66-1E4ED35E546E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F43F6FB-2747-4553-8E66-1E4ED35E546E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F43F6FB-2747-4553-8E66-1E4ED35E546E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F43F6FB-2747-4553-8E66-1E4ED35E546E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA1A099A-4F40-4C45-8B27-DA3179144483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA1A099A-4F40-4C45-8B27-DA3179144483}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA1A099A-4F40-4C45-8B27-DA3179144483}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA1A099A-4F40-4C45-8B27-DA3179144483}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
