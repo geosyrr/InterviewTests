@@ -48,7 +48,7 @@ function updateCustomer() {
         Swal.fire({
             icon: 'success',
             title: 'Success!',
-            text: 'Customer has been updated',
+            text: 'Customer has been updated'
         }).then((result) => {
             resolve(result.isConfirmed);
         })
